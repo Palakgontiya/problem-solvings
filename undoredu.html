@@ -1,0 +1,101 @@
+<!-- 1 maintain an array which will keep track of at least 8 changes in the form
+2 now according to the count variable the form fields will show the data
+3 undo will decrese the count by 1 and redo will increase the value by 1 
+4 disable the buttons according to the count value-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Text html</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 12px;
+        background-color: azure;
+      }
+      #textInput,
+      #undoButton,
+      #redoButton {
+        width: 400px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        border: 1px solid lightgreen;
+      }
+      #undoButton,
+      #redoButton {
+        background-color: lightgreen;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <input id="textInput" type="text" />
+      <button id="undoButton" disabled>Undo</button>
+      <button id="redoButton" disabled>Redo</button>
+    </div>
+  </body>
+
+  <script>
+    const textInput = document.getElementById("textInput");
+    const undoButton = document.getElementById("undoButton");
+    const redoButton = document.getElementById("redoButton");
+
+    const history = [];
+    let count = 0;
+
+    textInput.addEventListener("input", () => {
+      if (count < 8) {
+        count++;
+        history[count] = textInput.value;
+        undoButton.disabled = false;
+      } else {
+        history.shift();
+        history.push(textInput.value);
+      }
+
+      if (count === history.length - 1) {
+        redoButton.disabled = true;
+      } else {
+        redoButton.disabled = false;
+      }
+    });
+
+    undoButton.addEventListener("click", () => {
+      if (count > 0) {
+        count--;
+        textInput.value = history[count];
+        redoButton.disabled = false;
+      }
+
+      if (count === 0) {
+        undoButton.disabled = true;
+        undoButton.style.cursor = "not-allowed";
+      }
+    });
+
+    redoButton.addEventListener("click", () => {
+      if (count < history.length - 1) {
+        count++;
+        textInput.value = history[count];
+        undoButton.disabled = false;
+        undoButton.style.cursor = "pointer";
+      }
+
+      if (count === history.length - 1) {
+        redoButton.disabled = true;
+      }
+    });
+  </script>
+</html>
