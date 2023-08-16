@@ -6,9 +6,7 @@ function returnKthElement(nums, k) {
   for (let i = 0; i < k; i++) {
     let largestIndex = 0;
     largestElem = -10000;
-
     for (let j = 0; j < nums.length; j++) {
-      // Start from index 1
       if (nums[j] >= largestElem) {
         largestIndex = j;
         largestElem = nums[j];
@@ -23,4 +21,4 @@ function returnKthElement(nums, k) {
 const num = [3, 2, 3, 1, 2, 4, 5, 5, 6];
 const k = 5;
 
-console.log(returnKthElement(num, k)); // Output: 4
+console.log(returnKthElement(num, k));
