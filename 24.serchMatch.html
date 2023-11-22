@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .highlight {
+        background-color: blueviolet;
+      }
+      .light {
+        background-color: orange;
+      }
+    </style>
+  </head>
+  <body>
+    <input class="search_term" type="text" />
+
+    <div class="search">
+      As an organization, we believe in working together, which is important
+      because we know collaboration shapes opinions and drives creativity. We
+      always maintain sight of the importance of our role in building trust in
+      our day-to-day business. We embrace people with diverse skills,
+      perspectives and life experiences and ensure to welcome them as they are.
+      We show care and consideration for others and strive to create an
+      inclusive environment where everyone feels they belong.
+    </div>
+    <p class="search">
+      As an organization, we believe in working together, which is important
+      because we know collaboration shapes opinions and drives creativity. We
+      always maintain sight of the importance of our role in building trust in
+      our day-to-day business. We embrace people with diverse skills,
+      perspectives and life experiences and ensure to welcome them as they are.
+      We show care and consideration for others and strive to create an
+      inclusive environment where everyone feels they belong.
+    </p>
+    <script>
+      const elements = document.body.children;
+      const searchInput = document.querySelector(".search_term");
+
+      searchInput.addEventListener("blur", (e) => {
+        const search = e.target.value;
+        console.log(search);
+        highlightSearch(search);
+      });
+
+      function highlightSearch(search) {
+        for (let i = 0; i < elements.length; i++) {
+          let text = "";
+          const contentOfElement = elements[i].innerText.split(" ");
+
+          contentOfElement.forEach((word) => {
+            if (!word.toLowerCase().includes(search.toLowerCase())) {
+              text += word + " ";
+            } else {
+              if (
+                word !== search &&
+                word.toLowerCase().includes(search.toLowerCase())
+              ) {
+                text +=
+                  word.replace(
+                    new RegExp(search, "gi"),
+                    `<span class="light">${search}</span>`
+                  ) + " ";
+              } else {
+                text += `<span class="highlight">${word}</span> `;
+              }
+            }
+          });
+
+          elements[i].innerHTML = text;
+        }
+      }
+    </script>
+  </body>
+</html>
